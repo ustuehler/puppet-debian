@@ -11,8 +11,14 @@ define debian::apt::source($uri, $distribution, $components = [])
 		notify => $debian::apt::update::exec
 	}
 
-	# XXX: This trick wants to make sure that "apt-get update" has
-	# run successfully if another resource depends this APT source.
-	class noop {}
-	class { noop: require => $debian::apt::update::exec }
+	# This resource does nothing but to ensure that any other resource
+	# depending on this APT source will also depend on "apt-get update"
+	# having completed successfully.
+	debian::apt::source::sync { $name:
+		require => $debian::apt::update::exec
+	}
 }
+
+# This is just a dummy resource that is used with a require parameter to
+# ensure that "apt-get update" has completed successfully.
+define debian::apt::source::sync() {}
