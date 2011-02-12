@@ -1,0 +1,4 @@
+# managed by Puppet
+deb <%= uri %> <%= distribution %><% Array(components).each do |c| -%>
+ <%= c -%>
+<% end %>

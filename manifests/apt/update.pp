@@ -2,17 +2,24 @@
 # fact that apt-get(8) is used instead of, for example, aptitude(8) should
 # not concern the user of this class.
 #
-# Usage:
+# == Example
+#
 #  include debian::apt::update
+#
 #  exec { '...':
-#    notify => $debian::apt::update::exec
+#    notify => $debian::apt::update::exec,
+#    Class['debian::apt::update']
 #  }
 class debian::apt::update
 {
-  exec { '/usr/bin/apt-get update':
-    logoutput => on_failure,
-    refreshonly => true
-  }
+	include debian::apt
 
-  $exec = Exec['/usr/bin/apt-get update']
+	$command = "$debian::apt::apt_get update"
+
+	exec { $command:
+		refreshonly => true,
+		require => Class['debian::apt']
+	}
+
+	$exec = Exec[$command]
 }
