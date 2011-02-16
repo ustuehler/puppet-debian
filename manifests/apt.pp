@@ -13,7 +13,7 @@
 class debian::apt
 {
 	case $operatingsystem {
-	    Debian: {
+	    Debian, Ubuntu: {
 		# should always have apt(8)
 		$apt_get = "/usr/bin/apt-get"
 		$apt_key = "/usr/bin/apt-key"
