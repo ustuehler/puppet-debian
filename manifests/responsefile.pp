@@ -3,16 +3,7 @@
 # the debconf-get-selections(1) command from the debconf-utils package.
 define debian::responsefile($content)
 {
-	class preseeds {
-		file { "/var/lib/dpkg/preseeds":
-			ensure => directory,
-			owner => root,
-			group => root,
-			mode => 550
-		}
-	}
-
-	include preseeds
+	include debian::responsefile::preseeds
 
 	file { "/var/lib/dpkg/preseeds/$name":
 		ensure => present,
