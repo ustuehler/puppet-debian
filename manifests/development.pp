@@ -3,7 +3,13 @@
 # system.  Most notably, this includes the "dpkg-dev" package.
 class debian::development
 {
-	package { [dpkg-dev, debconf-utils]:
-		ensure => present
-	}
+  package { [dpkg-dev, debconf-utils]:
+    ensure => present
+  }
+
+  # equivs is a "tool to circumvent Debian package dependencies" or
+  # to build small packages containing normal files.
+  package { equivs:
+    ensure => present
+  }
 }
